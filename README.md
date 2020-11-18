@@ -1,6 +1,6 @@
 # azState
 
-No more complex state managment.
+## No more complex state managment.
 
 ```
     import * as w from "./azState.js";
@@ -19,7 +19,7 @@ No more complex state managment.
 
 ```
 
-Different listners to different members of an object
+## Different listeners to different members of an object
 
 ```
      import * as w from "./azState.js";
