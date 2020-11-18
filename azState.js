@@ -20,7 +20,6 @@ class azWatcher  {
         let validator={
             set: (obj, prop, value)=> {        
                 obj[prop] = value;
-                //cb(`${path}.${prop}`);
                 this.delaydb(()=>{cb(`${path}.${prop}`)},delay,root)
                 return true;
             },
@@ -36,7 +35,6 @@ class azWatcher  {
             },
             deleteProperty: (obj, prop)=> {                                 
                 delete obj[prop];
-                //cb(`${path}.${prop}`);
                 this.delaydb(()=>{cb(`${path}.${prop}`)},delay,root)
                 return true;            
             }
