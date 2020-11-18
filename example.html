@@ -7,25 +7,24 @@
 
     <script type="module">
 
-    import * as kuku from "./azState.js";
+    import * as w from "./azState.js";
 
+    let wacher = new w.azWatcher();
     
-    
-     let wacher = new kuku.azWatcher();
-    
-    let state ={rr:222,subState:{title:"this is substate"}}
-    state=wacher.startWatch(state,false);
-    
+    let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
+
+    state=wacher.startWatch(state,false);    
      
     wacher.addWatch('',(path)=>{console.log("watch all",path)})
-    wacher.addWatch('aa',(path)=>{console.log("watch aa",path)})
-    wacher.addWatch('aa.x',(path)=>{console.log("watch aa.x",path)})
+    wacher.addWatch('people',(path)=>{console.log("watch people",path)})
+    wacher.addWatch('subState.title',(path)=>{console.log("watch subState.title",path)})
    
-   
+   console.log(state.people);
    state.aa={xx:1,yy:2}
-   state.aa.x={s1:"aaa",s2:"bbb"};
-   state.aa.x.z=15
-   state.aa.y=5555;
+   state.people.push({name:"MR C"})
+   state.people[0].name="kuku"
+   state.subState.y=5555;
+   state.subState.titke="new title";
     
     
     

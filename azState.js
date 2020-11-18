@@ -32,6 +32,7 @@ class azWatcher  {
                     }
                     return this.__proxiex[root][`${path}.${prop}`];                        
                 }
+                return value;
             },
             deleteProperty: (obj, prop)=> {                                 
                 delete obj[prop];
