@@ -13,7 +13,7 @@
     
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
 
-    state=wacher.startWatch(state,false);    
+    state=wacher.startWatch(state,true);    
      
     wacher.addWatch('',(path)=>{console.log("watch all",path)})
     wacher.addWatch('people',(path)=>{console.log("watch people",path)})
