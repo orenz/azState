@@ -50,7 +50,7 @@
 ```
     import * as w from "./azState.js";
 
-    let wacher = new w.azWatcher();\
+    let wacher = new w.azWatcher();
     let wacher2 = new w.azWatcher();
     
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
@@ -61,7 +61,7 @@
      
      let i;
     wacher.addWatch(()=>{console.log("my state has changed")})
-    wacher2.addWatch(()=>{console.log(`call number ${i} of a 100 calls`)})
+    wacher2.addWatch(()=>{console.log(`call number ${i} of a 100 calls`)}) //Atomic wather !!!
     
     for(i=0;i<100;i++){
         state1.people[0].count=i; //the watcher callbach will be called once at the end of the loop (default)
