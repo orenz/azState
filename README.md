@@ -13,7 +13,7 @@
      
     wacher.addWatch('',(path)=>{console.log("watch all",path)})
     
-    state.people,push({name:"MR C"});
+    state.people.push({name:"MR C"});
     state.subState.title="new title"
     
 
