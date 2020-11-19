@@ -15,7 +15,7 @@
 
     state=wacher.startWatch(state,true);    
      
-    wacher.addWatch('',(path)=>{console.log("watch all",path)})
+    wacher.addWatch((path)=>{console.log("watch all",path)})
     wacher.addWatch('people',(path)=>{console.log("watch people",path)})
     wacher.addWatch('subState.title',(path)=>{console.log("watch subState.title",path)})
    

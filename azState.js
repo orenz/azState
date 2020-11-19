@@ -87,6 +87,10 @@ class azWatcher  {
     }
     
     addWatch(path,cb){
+        if (typeof(path) == 'function'){
+            cb=path;
+            path='';
+        }
         path='root'+(path? `.${path}` : ''); 
         this.watchCBs[path]=this.watchCBs[path] || {};
         if (this.watchCBs[path].func ){
