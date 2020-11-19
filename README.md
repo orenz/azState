@@ -69,3 +69,29 @@
     }
 
 ```
+
+## Get info of what attibutes chaned on your state
+
+```
+
+ import * as w from "./azState.js";
+
+    let wacher = new w.azWatcher();
+    
+    let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
+
+    state=wacher.startWatch(state);    
+     
+    wacher.addWatch((changes)=>{
+        console.log("my state has changed")
+        if (changes.people[0].name) {
+            console.log("first person name hass changes")
+        
+        }
+      })
+    
+    state.people.push({name:"MR C"});
+    state.subState.title="new title"
+    state.people.name="new name"
+
+```
