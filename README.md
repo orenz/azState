@@ -11,7 +11,7 @@
 
     state=wacher.startWatch(state,false);    
      
-    wacher.addWatch('',(path)=>{console.log("watch all",path)})
+    wacher.addWatch((path)=>{console.log("watch all",path)})
     
     state.people.push({name:"MR C"});
     state.subState.title="new title"
@@ -22,7 +22,7 @@
 ## Different listeners to different members of an object
 
 ```
-     import * as w from "./azState.js";
+    import * as w from "./azState.js";
 
     let wacher = new w.azWatcher();
     
@@ -30,7 +30,7 @@
 
     state=wacher.startWatch(state,true);    
      
-    wacher.addWatch('',(path)=>{console.log("watch all",path)})
+    wacher.addWatch((path)=>{console.log("watch all",path)})
     wacher.addWatch('people',(path)=>{console.log("watch people",path)})
     wacher.addWatch('subState.title',(path)=>{console.log("watch subState.title",path)})
    
