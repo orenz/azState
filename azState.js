@@ -74,7 +74,8 @@ class azWatcher  {
                         cb(path)
                     }else{
                         let closureF = ((curPath,cb)=>{
-                            return ()=>{cb(this.watchCBs[curPath].dirtyPath);this.watchCBs[curPath].dirtyPath=[]}
+                            let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath);
+                            return ()=>{cb(pathObj);this.watchCBs[curPath].dirtyPath={}}
                         })(curPath,cb)
                         
                         this.delaydb(closureF,delay,root,curPath)
@@ -98,6 +99,22 @@ class azWatcher  {
         }else{
             this.watchCBs[path].func=[cb];
         }
+    }
+
+    makeObjectFromPathsArr(pathsArr){
+        let ob={};
+        for (let p in pathsArr){
+            
+            let pArr=p.split(".");
+            let curOb=ob;
+            for (let prop of pArr){
+                if (!curOb[prop]){
+                    curOb[prop]={};
+                }
+                curOb=curOb[prop];
+            }
+        }
+        return ob;
     }
 }
 
