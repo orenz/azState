@@ -9,9 +9,9 @@
     
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
 
-    state=wacher.startWatch(state,false);    
+    state=wacher.startWatch(state);    
      
-    wacher.addWatch((path)=>{console.log("watch all",path)})
+    wacher.addWatch(()=>{console.log("my state has changed")})
     
     state.people.push({name:"MR C"});
     state.subState.title="new title"
@@ -28,11 +28,11 @@
     
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
 
-    state=wacher.startWatch(state,true);    
+    state=wacher.startWatch(state);    
      
-    wacher.addWatch((path)=>{console.log("watch all",path)})
-    wacher.addWatch('people',(path)=>{console.log("watch people",path)})
-    wacher.addWatch('subState.title',(path)=>{console.log("watch subState.title",path)})
+    wacher.addWatch(()=>{console.log("my state has changed")})
+    wacher.addWatch('people',()=>{console.log("the people array has changed")})
+    wacher.addWatch('subState.title',()=>{console.log("state.subState.title hass changed")})
    
    console.log(state.people);
    state.aa={xx:1,yy:2}
