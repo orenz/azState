@@ -19,12 +19,13 @@
     wacher.addWatch('people',(path)=>{console.log("watch people",path)})
     wacher.addWatch('subState.title',(path)=>{console.log("watch subState.title",path)})
    
+    
    console.log(state.people);
    state.aa={xx:1,yy:2}
    state.people.push({name:"MR C"})
    state.people[0].name="kuku"
    state.subState.y=5555;
-   state.subState.titke="new title";
+   state.subState.title="new title";
     
     
     

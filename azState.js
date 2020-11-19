@@ -102,6 +102,7 @@ class azWatcher  {
     }
 
     makeObjectFromPathsArr(pathsArr){
+        //return pathsArr;
         let ob={};
         for (let p in pathsArr){
             
