@@ -67,7 +67,7 @@ class azWatcher  {
             curPath+=rec;
             if (this.watchCBs[curPath] && this.watchCBs[curPath].func){
                 this.watchCBs[curPath].dirtyPath=this.watchCBs[curPath].dirtyPath || {};
-                this.watchCBs[curPath].dirtyPath[path]=true;
+                this.watchCBs[curPath].dirtyPath[path.slice(curPath.length+1)]=true;
 
                 for (let cb of this.watchCBs[curPath].func){
                     if (!delay){
