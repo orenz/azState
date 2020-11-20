@@ -5,12 +5,10 @@
 ```
     import * as w from "./azState.js";
 
-    let wacher = new w.azWatcher();
-    
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
-
+    
+    let wacher = new w.azWatcher();
     state=wacher.startWatch(state);    
-     
     wacher.addWatch(()=>{console.log("my state has changed")})
     
     state.people.push({name:"MR C"});
@@ -24,17 +22,15 @@
 ```
     import * as w from "./azState.js";
 
-    let wacher = new w.azWatcher();
-    
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
-
+    
+    let wacher = new w.azWatcher();
     state=wacher.startWatch(state);    
      
     wacher.addWatch(()=>{console.log("my state has changed")})
     wacher.addWatch('people',()=>{console.log("the people array has changed")})
     wacher.addWatch('subState.title',()=>{console.log("state.subState.title hass changed")})
    
-   console.log(state.people);
    state.aa={xx:1,yy:2}
    state.people.push({name:"MR C"})
    state.people[0].name="kuku"
@@ -50,16 +46,15 @@
 ```
     import * as w from "./azState.js";
 
-    let wacher = new w.azWatcher();
-    let wacher2 = new w.azWatcher();
-    
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
+    
+    let wacher = new w.azWatcher();
+    let wacher2 = new w.azWatcher();    
 
     let state1=wacher.startWatch(state);    
     let state2=wacher2.startWatch(state,false); //Acomic watch !!!     
-     
-     
-     let i;
+    
+    let i;
     wacher.addWatch(()=>{console.log("my state has changed")})
     wacher2.addWatch(()=>{console.log(`call number ${i} of a 100 calls`)}) //Atomic wather !!!
     
@@ -76,10 +71,9 @@
 
  import * as w from "./azState.js";
 
-    let wacher = new w.azWatcher();
-    
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
-
+    
+    let wacher = new w.azWatcher();
     state=wacher.startWatch(state);    
      
     wacher.addWatch((changes)=>{
