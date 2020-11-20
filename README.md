@@ -2,6 +2,16 @@
 
 ## No more complex state managment.
 
+    Just a simple callback for each chage:
+    
+    ```
+    state=wacher.startWatch(state);    
+    wacher.addWatch(()=>{console.log("my state has changed")})
+    ```
+    
+    The callback will be called for each change on the state object.
+
+    A full example:
 ```
     import * as w from "./azState.js";
 
