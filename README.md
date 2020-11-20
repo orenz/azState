@@ -27,9 +27,9 @@
     let wacher = new w.azWatcher();
     state=wacher.startWatch(state);    
      
-    wacher.addWatch(()=>{console.log("my state has changed")})
-    wacher.addWatch('people',()=>{console.log("the people array has changed")})
-    wacher.addWatch('subState.title',()=>{console.log("state.subState.title hass changed")})
+    wacher.addWatch(()=>{console.log("my state has changed")}) //watch the whole state object
+    wacher.addWatch('people',()=>{console.log("the people array has changed")}) //only watch changes in the people array
+    wacher.addWatch('subState.title',()=>{console.log("state.subState.title hass changed")}) //only watch changes in the subAtate title attribute
    
    state.aa={xx:1,yy:2}
    state.people.push({name:"MR C"})
