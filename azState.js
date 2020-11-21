@@ -1,10 +1,11 @@
 
 class azWatcher  {
-    constructor() {
+    constructor(state,delay = true) {
         
         this.__proxiex={};
         this.__timeout={};
         this.watchCBs={};
+        this.state =  this.startWatch(state,delay)
     }
     
     startWatch(watchObj,delay=true){
