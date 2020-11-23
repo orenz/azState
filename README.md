@@ -6,9 +6,9 @@
     import * as w from "./azState.js";
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
-    
-    let wacher = new w.azWatcher();
-    state=wacher.startWatch(state);    
+
+    let wacher = new w.azWatcher(state,true);
+    state = wacher.state; //hide the old state (optional)       
     wacher.addWatch(()=>{console.log("my state has changed")})
     
     state.people.push({name:"MR C"});
@@ -24,8 +24,8 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    state=wacher.startWatch(state);    
+    let wacher = new w.azWatcher(state,true);
+    state = wacher.state; //hide the old state (optional)       
      
     wacher.addWatch(()=>{console.log("my state has changed")}) //watch the whole state object
     wacher.addWatch('people',()=>{console.log("the people array has changed")}) //only watch changes in the people array
@@ -48,12 +48,11 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    let wacher2 = new w.azWatcher();    
+    let wacher = new w.azWatcher(state,true);
+    let wacher2 = new w.azWatcher(state,true);
+    let state1 = wacher.state;
+    let state2 = wacher2.state;
 
-    let state1=wacher.startWatch(state);    
-    let state2=wacher2.startWatch(state,false); //Acomic watch !!!     
-    
     let i;
     wacher.addWatch(()=>{console.log("my state has changed")})
     wacher2.addWatch(()=>{console.log(`call number ${i} of a 100 calls`)}) //Atomic wather !!!
@@ -73,9 +72,9 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    state=wacher.startWatch(state);    
-     
+    let wacher = new w.azWatcher(state,true);
+    state = wacher.state; //hide the old state (optional)       
+ 
     wacher.addWatch((changes)=>{
         console.log("my state has changed")
         if (changes.people[0].name) {
