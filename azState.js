@@ -79,11 +79,13 @@ class azWatcher  {
 
                 for (let cb of this.watchCBs[curPath].func){
 
-                    cb.dirtyPath=this.watchCBs[curPath].dirtyPath || {};
+                    cb.dirtyPath=cb.dirtyPath || {};
                     cb.dirtyPath[path.slice(curPath.length+1)]=true; //light up the relative changed path
 
                     if (!delay){
-                        cb.f(path);
+                        let pathObj =this.makeObjectFromPathsArr(cb.dirtyPath);
+                        cb.f(pathObj);
+                        cb.dirtyPath={};
                     }else{
                         let closureF = ((curPath,cb)=>{
                             
@@ -141,7 +143,7 @@ function createState(state,delay){
     state=wacher.startWatch(state,delay);    
     state[Symbol.for('azState')]=wacher;
     state[Symbol.for('azStatepPath')]='';
-    return state;
+    return state;   
 }
 
 function addWatch(state,path,cb){
@@ -150,7 +152,7 @@ function addWatch(state,path,cb){
         path='';
     }
     
-    console.log("wating:",path,"of",state[Symbol.for('azStatepPath')])
+    
     let wacher = state[Symbol.for('azState')];    
     
     let relativePath= state[Symbol.for('azStatepPath')].replace(/^\./, ''); //remove first dot, ;
