@@ -24,13 +24,13 @@
    console.log("zzz part2")
     let PartOfState = state.people[1];
    //watch part of the state
-   w.addWatch(PartOfState,"name",(path)=>{console.log("only people 1111",path)})
+   w.addWatch(PartOfState,(path)=>{console.log("only people 1111",path)})
     
    console.log(state.people);
    state.aa={xx:1,yy:2}
    state.people.push({name:"MR C"})
    state.people[0].name="kuku"
-   state.subState.y=5555;
+   state.subState.y=5555;   
    state.subState.title="new title";
 
    PartOfState.name="zzzzz";

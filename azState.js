@@ -33,8 +33,7 @@ class azWatcher  {
             get:(obj, prop, receiver)=> {                            
                 let value = obj[prop];                
                 if (typeof value === 'object' && Symbol.for('azState') !=prop) {                 
-                    if (!this.__proxiex[root][`${path}.${prop}`]){ //so we do not duplicate proxies for each get
-                        //console.log("zzz new proxy",`${path}.${prop}`)
+                    if (!this.__proxiex[root][`${path}.${prop}`]){ //so we do not duplicate proxies for each get                        
                         this.__proxiex[root][`${path}.${prop}`] = this.watchFactory(value,`${path}.${prop}`,root,delay);
                         this.__proxiex[root][`${path}.${prop}`][Symbol.for('azState')]=obj[Symbol.for('azState')]; // add the watcher here     
                         this.__proxiex[root][`${path}.${prop}`][Symbol.for('azStatepPath')]=`${obj[Symbol.for('azStatepPath')]}.${prop}`
@@ -69,7 +68,7 @@ class azWatcher  {
     }
     
     topLevelCb(path,delay,root){
-        console.log("zzzppp",path,this.watchCBs);        
+           
         let pathArr = path.split('.');
         let curPath='';
         for (let rec of pathArr){
@@ -80,10 +79,12 @@ class azWatcher  {
 
                 for (let cb of this.watchCBs[curPath].func){
                     if (!delay){
-                        cb.f(path)
+                        cb.f(path);
                     }else{
                         let closureF = ((curPath,cb)=>{
-                            let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath);
+                            
+                          
+                            let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath,cb.relativePath);
                             return ()=>{cb.f(pathObj);this.watchCBs[curPath].dirtyPath={}}
                         })(curPath,cb)
                         
@@ -96,25 +97,27 @@ class azWatcher  {
         }
     }
     
-    addWatch(path,cb){
+    addWatch(path,cb,relativePath){
+        relativePath=relativePath||'';
+        
         if (typeof(path) == 'function'){
+            relativePath=cb;
             cb=path;
             path='';
         }
         path=path.replace(/^\./, ''); //remove first dot, 
-        console.log("zzz watch path:",path)
+        
         path='root'+(path? `.${path}` : ''); 
         this.watchCBs[path]=this.watchCBs[path] || {};
         if (this.watchCBs[path].func ){
-            this.watchCBs[path].func.push({f:cb});
+            this.watchCBs[path].func.push({f:cb,relativePath:relativePath});
         }else{
-            this.watchCBs[path].func=[{f:cb}];
+            this.watchCBs[path].func=[{f:cb,relativePath:relativePath}];
         }
     }
 
-    makeObjectFromPathsArr(pathsArr){
-        //return pathsArr;
-        let ob={};
+    makeObjectFromPathsArr(pathsArr){        
+        let ob={};               
         for (let p in pathsArr){
             
             let pArr=p.split(".");
@@ -144,10 +147,12 @@ function addWatch(state,path,cb){
         path='';
     }
     
-    console.log("ZZZZZZZZZZZZZZZZZ",state[Symbol.for('azStatepPath')])
+    console.log("wating:",path,"of",state[Symbol.for('azStatepPath')])
     let wacher = state[Symbol.for('azState')];    
-    console.log("watching:",`${state[Symbol.for('azStatepPath')]}.${path}`)
-    path ? wacher.addWatch(`${state[Symbol.for('azStatepPath')]}.${path}`,cb) : wacher.addWatch(cb);    
+    
+    let relativePath= state[Symbol.for('azStatepPath')].replace(/^\./, ''); //remove first dot, ;
+    path ? wacher.addWatch(`${state[Symbol.for('azStatepPath')]}.${path}`,cb,relativePath) : 
+    relativePath ? wacher.addWatch(relativePath,cb,relativePath) : wacher.addWatch(cb,relativePath);    
 }
 
 export { azWatcher ,createState,addWatch}
