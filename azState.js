@@ -80,11 +80,11 @@ class azWatcher  {
 
                 for (let cb of this.watchCBs[curPath].func){
                     if (!delay){
-                        cb(path)
+                        cb.f(path)
                     }else{
                         let closureF = ((curPath,cb)=>{
                             let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath);
-                            return ()=>{cb(pathObj);this.watchCBs[curPath].dirtyPath={}}
+                            return ()=>{cb.f(pathObj);this.watchCBs[curPath].dirtyPath={}}
                         })(curPath,cb)
                         
                         this.delaydb(closureF,delay,root,curPath)
@@ -106,9 +106,9 @@ class azWatcher  {
         path='root'+(path? `.${path}` : ''); 
         this.watchCBs[path]=this.watchCBs[path] || {};
         if (this.watchCBs[path].func ){
-            this.watchCBs[path].func.push(cb);
+            this.watchCBs[path].func.push({f:cb});
         }else{
-            this.watchCBs[path].func=[cb];
+            this.watchCBs[path].func=[{f:cb}];
         }
     }
 
