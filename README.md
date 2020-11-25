@@ -7,9 +7,9 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    state=wacher.startWatch(state);    
-    wacher.addWatch(()=>{console.log("my state has changed")})
+    
+    state= state=w.createState(state,true); 
+    w.addWatch(state,()=>{console.log("my state has changed")})
     
     state.people.push({name:"MR C"});
     state.subState.title="new title"
@@ -24,12 +24,11 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    state=wacher.startWatch(state);    
+    state=w.createState(state,true);         
      
-    wacher.addWatch(()=>{console.log("my state has changed")}) //watch the whole state object
-    wacher.addWatch('people',()=>{console.log("the people array has changed")}) //only watch changes in the people array
-    wacher.addWatch('subState.title',()=>{console.log("state.subState.title hass changed")}) //only watch changes in the subAtate title attribute
+    w.addWatch(state,()=>{console.log("my state has changed")}) //watch the whole state object
+    w.addWatch(state,'people',()=>{console.log("the people array has changed")}) //only watch changes in the people array
+    w.addWatch(state,'subState.title',()=>{console.log("state.subState.title hass changed")}) //only watch changes in the subAtate title attribute
    
    state.aa={xx:1,yy:2}
    state.people.push({name:"MR C"})
@@ -48,15 +47,14 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    let wacher2 = new w.azWatcher();    
+   
 
-    let state1=wacher.startWatch(state);    
-    let state2=wacher2.startWatch(state,false); //Acomic watch !!!     
+    let state1=w.createState(state,true); 
+    let state2=w.createState(state,false); //Acomic watch !!!     
     
     let i;
-    wacher.addWatch(()=>{console.log("my state has changed")})
-    wacher2.addWatch(()=>{console.log(`call number ${i} of a 100 calls`)}) //Atomic wather !!!
+    w.addWatch(state1,()=>{console.log("my state has changed")})
+    w.addWatch(state2,()=>{console.log(`call number ${i} of a 100 calls`)}) //Atomic wather !!!
     
     for(i=0;i<100;i++){
         state1.people[0].count=i; //the watcher callbach will be called once at the end of the loop (default)
@@ -73,10 +71,9 @@
 
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
-    let wacher = new w.azWatcher();
-    state=wacher.startWatch(state);    
+    state=w.createState(state,true);    
      
-    wacher.addWatch((changes)=>{
+    w.addWatch(state,(changes)=>{
         console.log("my state has changed")
         if (changes.people[0].name) {
             console.log("first person name hass changes")
@@ -89,3 +86,21 @@
     state.people.name="new name"
 
 ```
+
+## Hey, you can add wathces to sublasses of a state
+
+   import * as w from "./azState.js";
+
+   let state ={people:[{name:"MR A"},{name:{f:"MR B",l:"the scond"} }],subState:{title:"this is substate"}}
+   
+   state=w.createState(state,true);    
+   w.addWatch(state,()=>{console.log("I am watching thos")}) //watch the whole state object
+   someFunc(state.people[1]);
+   
+   function someFunc(person){
+      w.addWatch(ppl,()=>{console.log("I watch this person")}) //watch the whole state object
+   }
+
+   
+
+
