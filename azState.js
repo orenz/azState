@@ -84,7 +84,7 @@ class azWatcher  {
                         let closureF = ((curPath,cb)=>{
                             
                           
-                            let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath,cb.relativePath);
+                            let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath);
                             return ()=>{cb.f(pathObj);this.watchCBs[curPath].dirtyPath={}}
                         })(curPath,cb)
                         
@@ -97,11 +97,10 @@ class azWatcher  {
         }
     }
     
-    addWatch(path,cb,relativePath){
-        relativePath=relativePath||'';
+    addWatch(path,cb){
+        
         
         if (typeof(path) == 'function'){
-            relativePath=cb;
             cb=path;
             path='';
         }
@@ -110,9 +109,9 @@ class azWatcher  {
         path='root'+(path? `.${path}` : ''); 
         this.watchCBs[path]=this.watchCBs[path] || {};
         if (this.watchCBs[path].func ){
-            this.watchCBs[path].func.push({f:cb,relativePath:relativePath});
+            this.watchCBs[path].func.push({f:cb});
         }else{
-            this.watchCBs[path].func=[{f:cb,relativePath:relativePath}];
+            this.watchCBs[path].func=[{f:cb}];
         }
     }
 
@@ -152,7 +151,7 @@ function addWatch(state,path,cb){
     
     let relativePath= state[Symbol.for('azStatepPath')].replace(/^\./, ''); //remove first dot, ;
     path ? wacher.addWatch(`${state[Symbol.for('azStatepPath')]}.${path}`,cb,relativePath) : 
-    relativePath ? wacher.addWatch(relativePath,cb,relativePath) : wacher.addWatch(cb,relativePath);    
+    relativePath ? wacher.addWatch(relativePath,cb) : wacher.addWatch(cb,relativePath);    
 }
 
 export { azWatcher ,createState,addWatch}
