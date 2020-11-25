@@ -75,17 +75,21 @@ class azWatcher  {
             curPath+=rec;
             if (this.watchCBs[curPath] && this.watchCBs[curPath].func){
                 this.watchCBs[curPath].dirtyPath=this.watchCBs[curPath].dirtyPath || {};
-                this.watchCBs[curPath].dirtyPath[path.slice(curPath.length+1)]=true;
+                this.watchCBs[curPath].dirtyPath[path.slice(curPath.length+1)]=true; //light up the relative path
 
                 for (let cb of this.watchCBs[curPath].func){
+
+                    cb.dirtyPath=this.watchCBs[curPath].dirtyPath || {};
+                    cb.dirtyPath[path.slice(curPath.length+1)]=true; //light up the relative path
+
                     if (!delay){
                         cb.f(path);
                     }else{
                         let closureF = ((curPath,cb)=>{
                             
                           
-                            let pathObj =this.makeObjectFromPathsArr(this.watchCBs[curPath].dirtyPath);
-                            return ()=>{cb.f(pathObj);this.watchCBs[curPath].dirtyPath={}}
+                            let pathObj =this.makeObjectFromPathsArr(cb.dirtyPath);
+                            return ()=>{cb.f(pathObj);cb.dirtyPath={}}
                         })(curPath,cb)
                         
                         this.delaydb(closureF,delay,root,curPath)
