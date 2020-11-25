@@ -89,6 +89,7 @@
 
 ## Hey, you can add wathces to sublasses of a state
 
+```
    import * as w from "./azState.js";
 
    let state ={people:[{name:"MR A"},{name:{f:"MR B",l:"the scond"} }],subState:{title:"this is substate"}}
@@ -100,7 +101,7 @@
    function someFunc(person){
       w.addWatch(ppl,()=>{console.log("I watch this person")}) //watch the whole state object
    }
-
+```
    
 
 
