@@ -80,7 +80,7 @@ class azWatcher  {
                 for (let cb of this.watchCBs[curPath].func){
 
                     cb.dirtyPath=this.watchCBs[curPath].dirtyPath || {};
-                    cb.dirtyPath[path.slice(curPath.length+1)]=true; //light up the relative path
+                    cb.dirtyPath[path.slice(curPath.length+1)]=true; //light up the relative changed path
 
                     if (!delay){
                         cb.f(path);
