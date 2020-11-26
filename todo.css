@@ -1,0 +1,6 @@
+.h{
+    color:red;
+}
+[todo-status="Active"]{
+    color:green;
+}

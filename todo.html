@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+
+<body>
+
+
+    <todo-list id="zz"></todo-list>
+</body>    
+
+
+
+    <script type="module">
+
+    import * as w from "./azState.js";
+    import * as w2 from "./todo.js";
+
+    window.state = w.createState({todos:[{ttl:"do this",status:'Active'}],todoFilter:"Active"},true);       
+    document.getElementById("zz").bind(state)
+
+    
+    
+
+    </script>
+
+</html>
