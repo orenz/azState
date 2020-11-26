@@ -16,7 +16,6 @@ class todoList extends HTMLElement  {
           if (filter){
             this.state.todoFilter=filter;
           }     
-
       })
       this.addEventListener("change",(e)=>{
         if (e.target?.id=="newTask"){
@@ -36,12 +35,17 @@ class todoList extends HTMLElement  {
 
         let tmpl = html`
             <style>@import "todo.css";</style>
-            <div><input id="newTask"></div>
+            <div><input id="newTask" class="new-todo" placeholder="What needs to be done?"></div>
             <div>
                 ${this.state.todos.map((el,ind)=>{return {el:el,ind:ind};}).filter((el)=>{                                 
                     if (this.state.todoFilter == "All"){return true;}
                     return (this.state.todoFilter == el.el.status);
-                }).map((el)=>{return html`<div><button kill-todo=${el.ind}>complete</button> <span todo-status=${el.el.status}>${el.el.ttl}</span> <div>`})}
+                }).map((el)=>{return html`
+                        <div>
+                        <input  kill-todo=${el.ind}  type="checkbox" ?checked=${el.el.status=="Complete"}> 
+                        <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
+                        <div>
+                    `})}
             </div>            
             <div>
                 <button filter="All" class=${this.state.todoFilter=="All" ? "h": "l"}>All</button>
