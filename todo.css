@@ -1,3 +1,13 @@
+body {
+    font-size: 24px;
+    font-family: inherit;
+    font-weight: inherit;
+}
+
+.todo-line{
+    padding:5px;
+}
+
 .h{
     color:red;
 }

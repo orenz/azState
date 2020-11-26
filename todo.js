@@ -34,15 +34,20 @@ class todoList extends HTMLElement  {
         if (!this.state){return;}
 
         let tmpl = html`
-            <style>@import "todo.css";</style>
+            <style>
+                @import "todo.css";
+                @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+                            
+            </style>
             <div><input id="newTask" class="new-todo" placeholder="What needs to be done?"></div>
             <div>
                 ${this.state.todos.map((el,ind)=>{return {el:el,ind:ind};}).filter((el)=>{                                 
                     if (this.state.todoFilter == "All"){return true;}
                     return (this.state.todoFilter == el.el.status);
                 }).map((el)=>{return html`
-                        <div>
-                        <input  kill-todo=${el.ind}  type="checkbox" ?checked=${el.el.status=="Complete"}> 
+                        <div class="todo-line">
+                        <i class="fa fa-square-o" kill-todo=${el.ind}  style=${el.el.status=="Complete"?'display:none':''}></i>
+                        <i class="fa fa-check-square-o" style=${el.el.status!="Complete"?'display:none':''}></i>                       
                         <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
                         <div>
                     `})}
