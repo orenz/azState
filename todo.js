@@ -9,6 +9,7 @@ class todoList extends HTMLElement  {
       super();
       this.addEventListener("click",(e)=>{          
           let ind=e.target?.getAttribute("kill-todo");
+          let indDel=e.target?.getAttribute("del-todo");
           let filter = e.target?.getAttribute("filter");
           if (ind){
               this.state.todos[ind].status="Complete"                            
@@ -46,17 +47,19 @@ class todoList extends HTMLElement  {
                     return (this.state.todoFilter == el.el.status);
                 }).map((el)=>{return html`
                         <div class="todo-line">
-                        <i class="fa fa-square-o" kill-todo=${el.ind}  style=${el.el.status=="Complete"?'display:none':''}></i>
+                        <i class="fa fa-square-o" kill-todo=${el.ind}  style=${el.el.status=="Complete"?'display:none':''}></i>                        
                         <i class="fa fa-check-square-o" style=${el.el.status!="Complete"?'display:none':''}></i>                       
                         <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
+                        <span del-todo>x</span>
                         <div>
                     `})}
             </div>            
-            <div>
-                <button filter="All" class=${this.state.todoFilter=="All" ? "h": "l"}>All</button>
-                <button filter="Active" class=${this.state.todoFilter=="Active" ? "h": "l"}>Active</button>
-                <button filter="Complete" class=${this.state.todoFilter=="Complete" ? "h": "l"}>Complete</button>
-                <span>${this.state.todos.filter(el=>{return el.status=="Active"}).length} todus left
+            <div class="todo-footer" style=${this.state.todos.length>0?'':'display:none'}>
+                <span>${this.state.todos.filter(el=>{return el.status=="Active"}).length} items  left
+                <a href="#" filter="All" class=${this.state.todoFilter=="All" ? "h": "l"}>All</a>
+                <a href="#"  filter="Active" class=${this.state.todoFilter=="Active" ? "h": "l"}>Active</a>
+                <a href="#"  filter="Complete" class=${this.state.todoFilter=="Complete" ? "h": "l"}>Complete</a>
+                
             </div>
         `;
         render(tmpl, this);

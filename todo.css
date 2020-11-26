@@ -8,9 +8,7 @@ body {
     padding:5px;
 }
 
-.h{
-    color:red;
-}
+
 [todo-status="Active"]{
     color:green;
 }
@@ -48,4 +46,36 @@ body {
     display: block;
     line-height: 1.2;
     transition: color 0.4s;
+}
+.todo-footer a{
+    color: inherit;
+    margin: 3px;
+    padding: 3px 7px;
+    text-decoration: none;
+    zborder: 1px solid transparent;
+    border-radius: 3px;
+}
+
+.todo-footer {
+    margin-top: 20px;
+    border-top: 1px solid lightgray;
+    padding: 10px;
+}
+
+
+
+ .todo-footer a.selected {
+    border-color: rgba(175, 47, 47, 0.2);
+    
+}
+.h{
+    border-color: rgba(175, 47, 47, 0.2);
+    border:1px solid red;
+}
+[del-todo]{
+    float:right;
+    display: none;
+}
+.todo-line:hover [del-todo]{
+    display: initial;
 }

@@ -13,7 +13,7 @@
     import * as w from "./azState.js";
     import * as w2 from "./todo.js";
 
-    window.state = w.createState({todos:[{ttl:"do this",status:'Active'}],todoFilter:"Active"},true);       
+    window.state = w.createState({todos:[],todoFilter:"All"},true);       
     document.getElementById("zz").bind(state)
 
     
