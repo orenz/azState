@@ -47,7 +47,7 @@ class todoList extends HTMLElement  {
                 <button filter="All" class=${this.state.todoFilter=="All" ? "h": "l"}>All</button>
                 <button filter="Active" class=${this.state.todoFilter=="Active" ? "h": "l"}>Active</button>
                 <button filter="Complete" class=${this.state.todoFilter=="Complete" ? "h": "l"}>Complete</button>
-                <span>${this.state.todos.filter(el=>{el.status=="Active"}).length} todus left
+                <span>${this.state.todos.filter(el=>{return el.status=="Active"}).length} todus left
             </div>
         `;
         render(tmpl, this);
