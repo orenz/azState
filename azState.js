@@ -39,7 +39,7 @@ class azWatcher  {
         let validator={
             set: (obj, prop, value)=> {        
                 obj[prop] = value;                
-                if ([Symbol.for('azState'),Symbol.for('azStatepPath')].includes(prop) ){return true}
+                if ([Symbol.for('azState'),Symbol.for('azStatepPath'),Symbol.for('originalState')].includes(prop) ){return true}
                 
                 this.topLevelCb(`${path}.${prop}`,delay,root);
 
@@ -47,11 +47,12 @@ class azWatcher  {
             },
             get:(obj, prop, receiver)=> {                            
                 let value = obj[prop];                
-                if (typeof value === 'object' && Symbol.for('azState') !=prop) {                 
+                if (typeof value === 'object' && Symbol.for('azState') !=prop && Symbol.for('originalState') != prop) {                 
                     if (!this.__proxiex[root][`${path}.${prop}`]){ //so we do not duplicate proxies for each get                        
                         this.__proxiex[root][`${path}.${prop}`] = this.watchFactory(value,`${path}.${prop}`,root,delay);
                         this.__proxiex[root][`${path}.${prop}`][Symbol.for('azState')]=obj[Symbol.for('azState')]; // add the watcher here     
                         this.__proxiex[root][`${path}.${prop}`][Symbol.for('azStatepPath')]=`${obj[Symbol.for('azStatepPath')]}.${prop}`
+                        this.__proxiex[root][`${path}.${prop}`][Symbol.for('originalState')]=obj[Symbol.for('originalState')][prop]; // add the watcher here                             
                         //add relavie path so w can remove it.                                            
                     }
                     return this.__proxiex[root][`${path}.${prop}`];                        
@@ -153,11 +154,12 @@ class azWatcher  {
     }
 }
 
-function createState(state,delay){
+function createState(originalState,delay){
     let wacher = new azWatcher();
-    state=wacher.startWatch(state,delay);    
+    let state=wacher.startWatch(originalState,delay);    
     state[Symbol.for('azState')]=wacher;
     state[Symbol.for('azStatepPath')]='';
+    state[Symbol.for('originalState')]= originalState;
     return state;   
 }
 
@@ -175,4 +177,29 @@ function addWatch(state,path,cb){
     relativePath ? wacher.addWatch(relativePath,cb) : wacher.addWatch(cb,relativePath);    
 }
 
-export { azWatcher ,createState,addWatch}
+function objDelta(obj,path){    
+    if (obj && obj[Symbol.for('originalState')]){
+        obj=obj[Symbol.for('originalState')];
+        console.log("zzz original",obj)
+    }
+    
+    for(let key in path){
+    
+        if (Object.keys(path[key]).length > 0){
+            if (obj[key] === undefined){
+                path[key]=undefined;
+                return;
+            }
+            objDelta(obj[key],path[key])
+        }
+        else{
+            
+            if (path[key]){ 
+                path[key] = obj?.[key];
+            }
+            
+        }
+    }
+}
+
+export { azWatcher ,createState,addWatch,objDelta}
