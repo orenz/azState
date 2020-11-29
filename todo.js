@@ -1,16 +1,12 @@
 import * as w from "./azState.js";
 import {html, render} from 'https://unpkg.com/lit-html?module';
 
-
 //window.state = w.createState({todos:[{ttl:"do this",status:'Active'}],todoFilter:"Active"},true);   
-
 class todoList extends HTMLElement  {
     constructor() {
       super();
 
       this.addEventListener("click",(e)=>{    
-          
-
         let ind=e.target?.getAttribute("kill-todo");
         let indDel=e.target?.getAttribute("del-todo");
         let filter = e.target?.getAttribute("filter");
@@ -43,7 +39,6 @@ class todoList extends HTMLElement  {
 
       })
       this.addEventListener("blur",(e)=>{
-          console.log("zzzz blur")
         let ind=e.target?.getAttribute("task-edit");
         if (ind){
             this.state.todos[ind].ttl=e.target.value;
@@ -54,11 +49,8 @@ class todoList extends HTMLElement  {
         let ind=e.target?.closest("[todo-index]")?.getAttribute("todo-index");         
         if (ind){
             this.state.todos[ind].editMode="edit-mode"
-        }
-        
-      })
-
-      
+        }        
+      })      
     }
     bind(state){
         this.state=state;
