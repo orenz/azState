@@ -13,9 +13,10 @@
 
     let state=w.createState(state1,true);       
      
-    w.addWatch(state,(path)=>{w.objDelta(state,path);console.log("watch all",path);})
-    // w.addWatch(state,'people',(path)=>{console.log("watch people",path)})
-    // w.addWatch(state,'subState.title',(path)=>{console.log("watch subState.title",path)})
+    w.addWatch(state,(path)=>{console.log("watch all",path);})
+    
+     w.addWatch(state,'people',(path)=>{console.log("watch people",path)})
+     w.addWatch(state,'subState.title',(path)=>{console.log("watch subState.title",path)})
    
     
     

@@ -163,13 +163,14 @@ function createState(originalState,delay){
     return state;   
 }
 
-function addWatch(state,path,cb){
+function addWatch(state,path,cbprm){
     if (typeof(path) == 'function'){
-        cb=path;
+        cbprm=path;
         path='';
     }
     
-    
+    let cb= ((pathPrm)=>{objDelta(state,pathPrm);cbprm(pathPrm)}) //orenz make delta befor cb
+
     let wacher = state[Symbol.for('azState')];    
     
     let relativePath= state[Symbol.for('azStatepPath')].replace(/^\./, ''); //remove first dot, ;
@@ -178,9 +179,9 @@ function addWatch(state,path,cb){
 }
 
 function objDelta(obj,path){    
+    
     if (obj && obj[Symbol.for('originalState')]){
         obj=obj[Symbol.for('originalState')];
-        console.log("zzz original",obj)
     }
     
     for(let key in path){
