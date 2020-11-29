@@ -7,27 +7,40 @@ import {html, render} from 'https://unpkg.com/lit-html?module';
 class todoList extends HTMLElement  {
     constructor() {
       super();
+      this.genInput=document.createElement("input"); 
+      this.genInput.id="genInput"; //use this to display an in[ut for changing a task
+
       this.addEventListener("click",(e)=>{          
           let ind=e.target?.getAttribute("kill-todo");
           let indDel=e.target?.getAttribute("del-todo");
           let filter = e.target?.getAttribute("filter");
-          if (ind){
+          if (ind){ //clicked on complete chekbox            
               this.state.todos[ind].status="Complete"                            
           }                    
-          if (indDel){            
+          if (indDel){  //clicked on remove button
             this.state.todos.splice(indDel,1);            
             
           }
-          if (filter){
+          if (filter){ //clicked on filtering (active, done,all)
             this.state.todoFilter=filter;
           }     
       })
       this.addEventListener("change",(e)=>{
-        if (e.target?.id=="newTask"){
+        if (e.target?.id=="newTask"){ //added a new task by typingin the large top inpute
             this.state.todos.push({ttl:e.target.value,status:"Active"})
             e.target.value="";  
         }
       })
+      this.addEventListener("dblclick",(e)=>{ //wants to chage a task
+        let index=e.target?.getAttribute("todo-index"); 
+        if (index){
+            console.log("ZZZZ",index)
+            this.genInput.id
+        }
+        
+      })
+
+      
     }
     bind(state){
         this.state=state;
@@ -50,9 +63,8 @@ class todoList extends HTMLElement  {
                         if (this.state.todoFilter == "All"){return true;}
                         return (this.state.todoFilter == el.el.status);
                     }).map((el)=>{return html`
-                            <div class="todo-line">
-                            <i class="fa fa-square-o" kill-todo=${el.ind}  style=${el.el.status=="Complete"?'display:none':''}></i>                        
-                            <i class="fa fa-check-square-o" style=${el.el.status!="Complete"?'display:none':''}></i>                       
+                            <div class="todo-line" todo-index=${el.ind}>
+                            <i class=${el.el.status=="Complete"? "fa fa-check-square-o" : "fa fa-square-o"} kill-todo=${el.ind}></i>                                                                    
                             <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
                             <span del-todo=${el.ind}>x</span>
                             <div>
