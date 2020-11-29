@@ -28,8 +28,13 @@ class todoList extends HTMLElement  {
       this.addEventListener("change",(e)=>{
         if (e.target?.id=="newTask"){ //added a new task by typingin the large top inpute
             this.state.todos.push({ttl:e.target.value,status:"Active"})
-            e.target.value="";  
+            e.target.value="";              
+        }        
+        let ind=e.target?.getAttribute("task-edit");
+        if (ind){
+            this.state.todos[ind].ttl=e.target.value;
         }
+
       })
       this.addEventListener("dblclick",(e)=>{ //wants to chage a task
         let index=e.target?.getAttribute("todo-index"); 
@@ -65,7 +70,7 @@ class todoList extends HTMLElement  {
                     }).map((el)=>{return html`
                             <div class="todo-line" todo-index=${el.ind}>
                             <i class=${el.el.status=="Complete"? "fa fa-check-square-o" : "fa fa-square-o"} kill-todo=${el.ind}></i>                                                                    
-                            <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
+                            <span  todo-status=${el.el.status}><input class="azedit" value=${el.el.ttl} task-edit=${el.ind}></span> 
                             <span del-todo=${el.ind}>x</span>
                             <div>
                         `})}
