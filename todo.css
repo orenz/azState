@@ -1,3 +1,7 @@
+.doto-container{
+    max-width: 600px;
+}
+
 body {
     font-size: 24px;
     font-family: inherit;

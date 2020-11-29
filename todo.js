@@ -14,6 +14,10 @@ class todoList extends HTMLElement  {
           if (ind){
               this.state.todos[ind].status="Complete"                            
           }                    
+          if (indDel){            
+            this.state.todos.splice(indDel,1);            
+            
+          }
           if (filter){
             this.state.todoFilter=filter;
           }     
@@ -31,7 +35,6 @@ class todoList extends HTMLElement  {
         this.render();
     }
     render(){
-        console.log("zzz render")
         if (!this.state){return;}
 
         let tmpl = html`
@@ -40,27 +43,29 @@ class todoList extends HTMLElement  {
                 @import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
                             
             </style>
-            <div><input id="newTask" class="new-todo" placeholder="What needs to be done?"></div>
-            <div>
-                ${this.state.todos.map((el,ind)=>{return {el:el,ind:ind};}).filter((el)=>{                                 
-                    if (this.state.todoFilter == "All"){return true;}
-                    return (this.state.todoFilter == el.el.status);
-                }).map((el)=>{return html`
-                        <div class="todo-line">
-                        <i class="fa fa-square-o" kill-todo=${el.ind}  style=${el.el.status=="Complete"?'display:none':''}></i>                        
-                        <i class="fa fa-check-square-o" style=${el.el.status!="Complete"?'display:none':''}></i>                       
-                        <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
-                        <span del-todo>x</span>
-                        <div>
-                    `})}
-            </div>            
-            <div class="todo-footer" style=${this.state.todos.length>0?'':'display:none'}>
-                <span>${this.state.todos.filter(el=>{return el.status=="Active"}).length} items  left
-                <a href="#" filter="All" class=${this.state.todoFilter=="All" ? "h": "l"}>All</a>
-                <a href="#"  filter="Active" class=${this.state.todoFilter=="Active" ? "h": "l"}>Active</a>
-                <a href="#"  filter="Complete" class=${this.state.todoFilter=="Complete" ? "h": "l"}>Complete</a>
-                
-            </div>
+            <div class="doto-container">
+                <div><input id="newTask" class="new-todo" placeholder="What needs to be done?"></div>
+                <div>
+                    ${this.state.todos.map((el,ind)=>{return {el:el,ind:ind};}).filter((el)=>{                                 
+                        if (this.state.todoFilter == "All"){return true;}
+                        return (this.state.todoFilter == el.el.status);
+                    }).map((el)=>{return html`
+                            <div class="todo-line">
+                            <i class="fa fa-square-o" kill-todo=${el.ind}  style=${el.el.status=="Complete"?'display:none':''}></i>                        
+                            <i class="fa fa-check-square-o" style=${el.el.status!="Complete"?'display:none':''}></i>                       
+                            <span  todo-status=${el.el.status}>${el.el.ttl}</span> 
+                            <span del-todo=${el.ind}>x</span>
+                            <div>
+                        `})}
+                </div>            
+                <div class="todo-footer" style=${this.state.todos.length>0?'':'display:none'}>
+                    <span>${this.state.todos.filter(el=>{return el.status=="Active"}).length} items  left
+                    <a href="#" filter="All" class=${this.state.todoFilter=="All" ? "h": "l"}>All</a>
+                    <a href="#"  filter="Active" class=${this.state.todoFilter=="Active" ? "h": "l"}>Active</a>
+                    <a href="#"  filter="Complete" class=${this.state.todoFilter=="Complete" ? "h": "l"}>Complete</a>
+                    
+                </div>
+            </dic>
         `;
         render(tmpl, this);
     }    
