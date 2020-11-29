@@ -17,7 +17,7 @@ body {
 [todo-status="Active"]{
     color:green;
 }
-[todo-status="Complete"]{
+[todo-status="Complete"] * {
     text-decoration: line-through;
 }
 
