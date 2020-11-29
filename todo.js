@@ -7,23 +7,28 @@ import {html, render} from 'https://unpkg.com/lit-html?module';
 class todoList extends HTMLElement  {
     constructor() {
       super();
-      this.genInput=document.createElement("input"); 
-      this.genInput.id="genInput"; //use this to display an in[ut for changing a task
 
-      this.addEventListener("click",(e)=>{          
-          let ind=e.target?.getAttribute("kill-todo");
-          let indDel=e.target?.getAttribute("del-todo");
-          let filter = e.target?.getAttribute("filter");
-          if (ind){ //clicked on complete chekbox            
-              this.state.todos[ind].status="Complete"                            
-          }                    
-          if (indDel){  //clicked on remove button
-            this.state.todos.splice(indDel,1);            
-            
-          }
-          if (filter){ //clicked on filtering (active, done,all)
-            this.state.todoFilter=filter;
-          }     
+      this.addEventListener("click",(e)=>{    
+          
+
+        let ind=e.target?.getAttribute("kill-todo");
+        let indDel=e.target?.getAttribute("del-todo");
+        let filter = e.target?.getAttribute("filter");
+        
+        for(let l of this.state.todos){
+            delete l.editMode;
+        }
+
+        if (ind){ //clicked on complete chekbox            
+            this.state.todos[ind].status="Complete"                            
+        }                    
+        if (indDel){  //clicked on remove button
+        this.state.todos.splice(indDel,1);            
+        
+        }
+        if (filter){ //clicked on filtering (active, done,all)
+        this.state.todoFilter=filter;
+        }     
       })
       this.addEventListener("change",(e)=>{
         if (e.target?.id=="newTask"){ //added a new task by typingin the large top inpute
@@ -33,14 +38,22 @@ class todoList extends HTMLElement  {
         let ind=e.target?.getAttribute("task-edit");
         if (ind){
             this.state.todos[ind].ttl=e.target.value;
+            delete this.state.todos[ind].editMode;
         }
 
       })
+      this.addEventListener("blur",(e)=>{
+          console.log("zzzz blur")
+        let ind=e.target?.getAttribute("task-edit");
+        if (ind){
+            this.state.todos[ind].ttl=e.target.value;
+            delete this.state.todos[ind].editMode;
+        } 
+      })
       this.addEventListener("dblclick",(e)=>{ //wants to chage a task
-        let index=e.target?.getAttribute("todo-index"); 
-        if (index){
-            console.log("ZZZZ",index)
-            this.genInput.id
+        let ind=e.target?.closest("[todo-index]")?.getAttribute("todo-index");         
+        if (ind){
+            this.state.todos[ind].editMode="edit-mode"
         }
         
       })
@@ -70,7 +83,7 @@ class todoList extends HTMLElement  {
                     }).map((el)=>{return html`
                             <div class="todo-line" todo-index=${el.ind}>
                             <i class=${el.el.status=="Complete"? "fa fa-check-square-o" : "fa fa-square-o"} kill-todo=${el.ind}></i>                                                                    
-                            <span  todo-status=${el.el.status}><input class="azedit" value=${el.el.ttl} task-edit=${el.ind}></span> 
+                            <span  todo-status=${el.el.status}><input class="azedit${el.el.editMode?'':' read-only'}" value=${el.el.ttl} task-edit=${el.ind}></span> 
                             <span del-todo=${el.ind}>x</span>
                             <div>
                         `})}

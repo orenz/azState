@@ -9,7 +9,8 @@ body {
 }
 
 .todo-line{
-    padding:5px;
+    padding:0px;
+    border-bottom: 1px solid gray;
 }
 
 
@@ -104,8 +105,9 @@ body {
     -webkit-font-smoothing: antialiased;
 }
 
-.azedit::read-only {
-    border: none;
+.azedit.read-only {
+    border: 1px solid white;
     border-color: transparent;
-    outline: none;
+    outline: none;    
+    box-shadow: initial;
 }
