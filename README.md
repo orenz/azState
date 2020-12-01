@@ -113,7 +113,7 @@
     state=w.createState(state,true);    
     
     //snap is a snapshot of the state
-    w.addWatch(state,(path,snap)=>{console.log("watch all",path,JSON.parse(JSON.stringify(snap)))})
+    w.addWatch(state,(path,snap)=>{console.log("watch all",path,snap)})
     
 ```
 
