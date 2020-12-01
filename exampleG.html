@@ -13,7 +13,7 @@
 
     let state=w.createState(state1,true);       
      
-    w.addWatch(state,(path)=>{console.log("watch all",path);})
+    w.addWatch(state,(path,original)=>{console.log("watch all",path,original);})
     
      w.addWatch(state,'people',(path)=>{console.log("watch people",path)})
      w.addWatch(state,'subState.title',(path)=>{console.log("watch subState.title",path)})
@@ -29,7 +29,7 @@
    state.subState.title="new title";
     delete state.subState;
     
-    
+    console.log("state1",state1)
 
     </script>
 

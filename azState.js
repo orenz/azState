@@ -168,8 +168,9 @@ function addWatch(state,path,cbprm){
         cbprm=path;
         path='';
     }
+
     
-    let cb= ((pathPrm)=>{objDelta(state,pathPrm);cbprm(pathPrm)}) //orenz make delta befor cb
+    let cb= ((pathPrm)=>{ cbprm(pathPrm,state[Symbol.for('originalState')])}) //orenz make delta befor cb
 
     let wacher = state[Symbol.for('azState')];    
     
@@ -178,29 +179,5 @@ function addWatch(state,path,cbprm){
     relativePath ? wacher.addWatch(relativePath,cb) : wacher.addWatch(cb,relativePath);    
 }
 
-function objDelta(obj,path){    
-    
-    if (obj && obj[Symbol.for('originalState')]){
-        obj=obj[Symbol.for('originalState')];
-    }
-    
-    for(let key in path){
-    
-        if (Object.keys(path[key]).length > 0){
-            if (obj[key] === undefined){
-                path[key]=undefined;
-                return;
-            }
-            objDelta(obj[key],path[key])
-        }
-        else{
-            
-            if (path[key]){ 
-                path[key] = obj?.[key];
-            }
-            
-        }
-    }
-}
 
-export { azWatcher ,createState,addWatch,objDelta}
+export { azWatcher ,createState,addWatch}

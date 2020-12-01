@@ -14,7 +14,7 @@
     let state ={people:[{name:"MR A"},{name:{f:"MR B",l:"the scond"} }],subState:{title:"this is substate"}}
 
 
-    state=w.createState(state,false);    
+    state=w.createState(state,tre);    
     
     //watch different paths
     w.addWatch(state,(path)=>{console.log("watch all",path)})
@@ -35,6 +35,7 @@
     state.subState.title="new title";
 
     PartOfState.name.f="zzzzz";
+    
 
     
     
