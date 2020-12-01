@@ -103,5 +103,18 @@
    }
 ```
    
+## On any callback you will get the attributes that ware changed, and a snapshot of the state object
+   
+```
+     import * as w from "./azState.js";
+
+    let state ={people:[{name:"MR A"},{name:{f:"MR B",l:"the scond"} }],subState:{title:"this is substate"}}
+
+    state=w.createState(state,true);    
+    
+    //snap is a snapshot of the state
+    w.addWatch(state,(path,snap)=>{console.log("watch all",path,JSON.parse(JSON.stringify(snap)))})
+    
+```
 
 
