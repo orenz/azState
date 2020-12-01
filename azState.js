@@ -167,7 +167,7 @@ function addWatch(state,path,cbPrm){
         path='';
     }
     
-    let cb = (path)=>{cbPrm(path,state)}
+    let cb = (path)=>{cbPrm(path,JSON.parse(JSON.stringify(state)))}
     let wacher = state[Symbol.for('azState')];    
     
     let relativePath= state[Symbol.for('azStatepPath')].replace(/^\./, ''); //remove first dot, ;
