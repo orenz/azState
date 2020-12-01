@@ -1,4 +1,6 @@
-# azState
+# azState vanilla powerful and simple state management
+
+
 
 ## No more complex state managment.
    
