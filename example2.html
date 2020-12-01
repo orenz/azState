@@ -14,10 +14,10 @@
     let state ={people:[{name:"MR A"},{name:{f:"MR B",l:"the scond"} }],subState:{title:"this is substate"}}
 
 
-    state=w.createState(state,false);    
+    state=w.createState(state,true);    
     
     //watch different paths
-    w.addWatch(state,(path)=>{console.log("watch all",path)})
+    w.addWatch(state,(path,snap)=>{console.log("watch all",path,JSON.parse(JSON.stringify(snap)))})
     w.addWatch(state,'people',(path)=>{console.log("watch people",path)})
     w.addWatch(state,'subState.title',(path)=>{console.log("watch subState.title",path)})
 

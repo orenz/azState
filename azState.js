@@ -161,13 +161,13 @@ function createState(state,delay){
     return state;   
 }
 
-function addWatch(state,path,cb){
+function addWatch(state,path,cbPrm){
     if (typeof(path) == 'function'){
-        cb=path;
+        cbPrm=path;
         path='';
     }
     
-    
+    let cb = (path)=>{cbPrm(path,state)}
     let wacher = state[Symbol.for('azState')];    
     
     let relativePath= state[Symbol.for('azStatepPath')].replace(/^\./, ''); //remove first dot, ;
