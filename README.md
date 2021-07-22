@@ -1,6 +1,9 @@
 # azState vanilla powerful and simple state management
 
-
+## CDN
+```
+   https://cdn.jsdelivr.net/gh/orenz/azState/azState.js
+```
 
 ## No more complex state managment.
    
