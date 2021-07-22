@@ -10,7 +10,7 @@
     let state ={people:[{name:"MR A"},{name:"MR B"}],subState:{title:"this is substate"}}
     
     
-    state= state=w.createState(state,true); 
+    state=w.createState(state,true); 
     w.addWatch(state,()=>{console.log("my state has changed")})
     
     state.people.push({name:"MR C"});
